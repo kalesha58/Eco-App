@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 // mongoose.set("strictQuery", false);
 const connectDatabase = () => {
+  mongoose.set("useNewUrlParser", true);
   mongoose
     .connect(process.env.DB_URI, {
-      useNewUrlParser: true,
       
-      useUnifiedTopology: true
     })
     .then((data) => {
       console.log(`Mongodb connected with server: ${data.connection.host}`);
