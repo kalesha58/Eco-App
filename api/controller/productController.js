@@ -38,12 +38,11 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
 exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
+ 
   if (!product) {
-    return res.status(500).json({
-      success: false,
-      message: "Product not found",
-    });
+    return next(new ErrorHandler("Product not found", 404));
   }
+
 
   await product.remove();
 
