@@ -27,7 +27,7 @@ const FeatureProduct = () => {
       <div className="common-heading">Our Feature Services</div>
       <div className="grid grid-three-column">
       {products &&
-              products.map((product) => (
+              products.slice(0,3).map((product) => (
                 <Product key={product._id} product={product} />
               ))}
       </div>

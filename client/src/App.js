@@ -11,7 +11,11 @@ import {GlobalStyle} from "./GlobalStyle"
 import { ThemeProvider } from "styled-components";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import LoginSignup from "./Pages/LoginSignup";
+
+
 function App() {
+  
   const theme = {
     colors: {
       heading: "rgb(24 24 29)",
@@ -36,6 +40,7 @@ function App() {
       tab: "998px",
     },
   };
+ 
   return (
     <ThemeProvider theme={theme}>
    
@@ -46,9 +51,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
+        <Route   path="/products/:keyword"  element={<Products />} />
         <Route path="/product/:id" element={<SingleProduct />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<LoginSignup />} />
         <Route path="/cart" element={<Cart />} />
+     
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer/>

@@ -23,7 +23,8 @@ import {
         return {
           loading: false,
           products: action.payload.products,
-         
+          productsCount: action.payload.productsCount,
+          resultPerPage:action.payload.resultPerPage,
         
         };
       case ALL_PRODUCT_FAIL:
@@ -44,7 +45,7 @@ import {
     }
   };
   // {==================================================GET-PRODUCT-DETAILS--REDUCER===================================================}
-export const productDetailsReducer = (state = { product: [] }, action) => {
+export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
       return {

@@ -168,6 +168,7 @@ const Nav = () => {
               Products
             </NavLink>
           </li>
+         
           <li>
             <NavLink
               to="/contact"
@@ -175,6 +176,15 @@ const Nav = () => {
               onClick={() => setMenuIcon(false)}
             >
               Contact
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/login"
+              className="navbar-link"
+              onClick={() => setMenuIcon(false)}
+            >
+              Register
             </NavLink>
           </li>
           <li>

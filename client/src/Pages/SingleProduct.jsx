@@ -1,9 +1,9 @@
-import React ,{ Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getProductDetails } from "../Redux/Actions/productAction";
 import Loader from "../Pages/Loader/Loader";
-import {useAlert} from "react-alert"
+import { useAlert } from "react-alert";
 import { Rating } from "@mui/material";
 import styled from "styled-components";
 
@@ -13,22 +13,25 @@ import { Container } from "../style/Container";
 import FormatPrice from "../Helpers/FormatPrice";
 import { MdSecurity } from "react-icons/md";
 import { TbTruckDelivery, TbReplace } from "react-icons/tb";
-import AddToCart from '../Components/AddToCart';
-import MyImage from '../Components/MyImage';
+import { Carousel } from "react-responsive-carousel";
+import AddToCart from "../Components/AddToCart";
+import MyImage from "../Components/MyImage";
+import ReviewCard from "../Components/ReviewCard";
 const SingleProduct = () => {
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
   );
   const dispatch = useDispatch();
-  const alert=useAlert()
+  const alert = useAlert();
   const { id } = useParams();
   useEffect(() => {
-    if(error){
-       alert.error(error)
-       dispatch(clearErrors)
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors);
     }
     dispatch(getProductDetails(id));
-  }, [dispatch, id,error,alert]);
+  }, [dispatch, id, error, alert]);
+  
   const options = {
     size: "large",
     value: product.ratings,
@@ -44,8 +47,24 @@ const SingleProduct = () => {
           {/* product Images  */}
           <div className="product_images">
             {/* <MyImage imgs={d} /> */}
-            <img width="100%" src={product.images[0].url} alt="" />
-            
+            {/* <img width="100%" src={product?.images[0].url} alt="" /> */}
+            <Carousel
+            showThumbs={false}
+            autoPlay={true}
+            transitionTime={3}
+            infiniteLoop={true}
+            showStatus={false}
+          >
+            {product.images &&
+              product.images.map((item, i) => (
+                <img width="50%"
+                  className="CarouselImage"
+                  key={i}
+                  src={item.url}
+                  alt={`${i} Slide`}
+                />
+              ))}
+          </Carousel>
           </div>
 
           {/* product dAta  */}
@@ -88,7 +107,7 @@ const SingleProduct = () => {
             <div className="product-data-info">
               <p>
                 Available:
-                <span> {product.stock < 0 ? "Not Available":"In Stock"  }</span>
+                <span> {product.stock < 0 ? "Not Available" : "In Stock"}</span>
               </p>
               <p>
                 ID : <span> {id} </span>
@@ -99,14 +118,22 @@ const SingleProduct = () => {
             </div>
             <hr />
             {/* {product.stock > 0 && <AddToCart product={singleProduct} />} */}
-            <button
-                disabled={product.Stock < 1 ? true : false}
-               
-              >
-                Add to Cart
-              </button>
+            <button disabled={product.Stock < 1 ? true : false}>
+              Add to Cart
+            </button>
           </div>
         </div>
+        <h3 className="reviewsHeading">REVIEWS</h3>
+      {product.reviews && product.reviews[0] ? (
+            <div className="reviews">
+              {product.reviews &&
+                product.reviews.map((review) => (
+                  <ReviewCard key={review._id} review={review} />
+                ))}
+            </div>
+          ) : (
+            <p className="noReviews">No Reviews Yet</p>
+          )}
       </Container>
     </Wrapper>
   );
@@ -116,7 +143,7 @@ const Wrapper = styled.section`
   .container {
     padding: 9rem 0;
   }
-  .product_images {
+  .product_images >div{
     display: flex;
     align-items: center;
   }
