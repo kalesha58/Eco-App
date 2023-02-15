@@ -13,6 +13,8 @@ import { Container } from "../style/Container";
 import FormatPrice from "../Helpers/FormatPrice";
 import { MdSecurity } from "react-icons/md";
 import { TbTruckDelivery, TbReplace } from "react-icons/tb";
+import AddToCart from '../Components/AddToCart';
+import MyImage from '../Components/MyImage';
 const SingleProduct = () => {
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
@@ -33,15 +35,18 @@ const SingleProduct = () => {
     readOnly: true,
     precision: 0.5,
   };
+
   return (
     <Wrapper>
       <PageNavigation title={product.name} />
       <Container className="container">
         <div className="grid grid-two-column">
           {/* product Images  */}
-          {/* <div className="product_images">
-            <MyImage imgs={image} />
-          </div> */}
+          <div className="product_images">
+            {/* <MyImage imgs={d} /> */}
+            <img width="100%" src={product.images[0].url} alt="" />
+            
+          </div>
 
           {/* product dAta  */}
           <div className="product-data">
@@ -83,7 +88,7 @@ const SingleProduct = () => {
             <div className="product-data-info">
               <p>
                 Available:
-                {/* <span> {stock > 0 ? "In Stock" : "Not Available"}</span> */}
+                <span> {product.stock < 0 ? "Not Available":"In Stock"  }</span>
               </p>
               <p>
                 ID : <span> {id} </span>
@@ -93,7 +98,13 @@ const SingleProduct = () => {
               </p>
             </div>
             <hr />
-            {/* {stock > 0 && <AddToCart product={singleProduct} />} */}
+            {/* {product.stock > 0 && <AddToCart product={singleProduct} />} */}
+            <button
+                disabled={product.Stock < 1 ? true : false}
+               
+              >
+                Add to Cart
+              </button>
           </div>
         </div>
       </Container>
