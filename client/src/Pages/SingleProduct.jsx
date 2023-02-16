@@ -6,7 +6,7 @@ import Loader from "../Pages/Loader/Loader";
 import { useAlert } from "react-alert";
 import { Rating } from "@mui/material";
 import styled from "styled-components";
-
+import "./SingleProduct.css"
 import PageNavigation from "../Components/PageNavigation";
 // import MyImage from "./components/MyImage";
 import { Container } from "../style/Container";
@@ -121,9 +121,18 @@ const SingleProduct = () => {
             <button disabled={product.Stock < 1 ? true : false}>
               Add to Cart
             </button>
+            <p>
+              Status:
+              <b className={product.Stock < 1 ? "redColor" : "greenColor"}>
+                {product.Stock < 1 ? "OutOfStock" : "InStock"}
+              </b>
+            </p>
           </div>
+         
         </div>
-        <h3 className="reviewsHeading">REVIEWS</h3>
+      
+      </Container>
+      <h3 className="reviewsHeading">REVIEWS</h3>
       {product.reviews && product.reviews[0] ? (
             <div className="reviews">
               {product.reviews &&
@@ -134,7 +143,6 @@ const SingleProduct = () => {
           ) : (
             <p className="noReviews">No Reviews Yet</p>
           )}
-      </Container>
     </Wrapper>
   );
 };
