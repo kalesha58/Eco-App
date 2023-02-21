@@ -10,7 +10,9 @@ const sendToken = (user, statusCode, res) => {
     // secure: true,
     // sameSite: "none", 
   };
-
+// if(process.env.NODE_ENV="production"){
+//   options.secure=true
+// }
   res.status(statusCode).cookie("token", token, options).json({
     success: true,
     user,
