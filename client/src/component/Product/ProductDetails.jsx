@@ -10,7 +10,8 @@ import ReviewCard from "./ReviewCard";
 import Loader from "../layout/Loader/Loader";
 import {useAlert} from "react-alert"
 import MetaData from "../layout/MetaData";
-const ProductDetails = () => {
+import { addItemsToCart } from "../../Redux/Actions/cartAction";
+const ProductDetails = ({ match }) => {
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
   );
@@ -31,9 +32,24 @@ const ProductDetails = () => {
     readOnly: true,
     precision: 0.5,
   };
-  const decreaseQuantity = () => {};
-  const increaseQuantity = () => {};
-  const addToCartHandler = () => {};
+  const increaseQuantity = () => {
+    if (product.Stock <= quantity) return;
+
+    const qty = quantity + 1;
+    setQuantity(qty);
+  };
+
+  const decreaseQuantity = () => {
+    if (1 >= quantity) return;
+
+    const qty = quantity - 1;
+    setQuantity(qty);
+  };
+  const addToCartHandler = () => {
+    dispatch(addItemsToCart(match.params.id, quantity));
+    alert.success("Item Added To Cart");
+  };
+
   const submitReviewToggle = () => {};
   return (
   <Fragment>
@@ -78,7 +94,7 @@ const ProductDetails = () => {
             <div className="detailsBlock-3-1">
               <div className="detailsBlock-3-1-1">
                 <button onClick={decreaseQuantity}>-</button>
-                <input readOnly type="number" value={quantity} />
+                <input readOnly  type="number" value={quantity} />
                 <button onClick={increaseQuantity}>+</button>
               </div>
               <button

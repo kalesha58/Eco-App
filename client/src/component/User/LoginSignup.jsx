@@ -87,7 +87,7 @@ const {loading,error,isAuthenticated,token} =useSelector(state=>state.user)
     }
   };
 //   {=====================USE-Effect========================0}
-
+const redirect = location.search ? location.search.split("=")[1] : "/account";
 useEffect(()=>{
   // Cookies.set("token",token)
   // Cookies.set("user",user)
@@ -96,7 +96,7 @@ useEffect(()=>{
     dispatch(clearErrors())
   }
  if(isAuthenticated){
-  history.push("/account");
+  history.push(redirect);
  }
 },[error,isAuthenticated,history,dispatch,alert,token])
 

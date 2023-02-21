@@ -19,6 +19,9 @@ import UserOptions from "./component/layout/Header/UserOptions";
 import Profile from "./component/User/Profile";
 import UpdateProfile from "./component/User/UpdateProfile";
 import ProtectedRoute from "./component/Route/ProtectedRoute";
+import Cart from "./component/Cart/Cart";
+import Shipping from "./component/Cart/Shipping";
+import ConfirmOrder from "./component/Cart/ConfirmOrder";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.user);
   useEffect(() => {
@@ -56,7 +59,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-      {isAuthenticated && <UserOptions user={user} />}
+        {isAuthenticated && <UserOptions user={user} />}
         <Header />
 
         <Route exact path="/" component={Home} />
@@ -70,6 +73,9 @@ function App() {
         <Route exact path="/login" component={LoginSignup} />
         <ProtectedRoute exact path="/account" component={Profile} />
         <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
+        <Route exact path="/cart" component={Cart} />
+        <ProtectedRoute exact path="/shipping" component={Shipping} />
+        <ProtectedRoute  exact path="/order/confirm" component={ConfirmOrder} />
         <Footer />
       </Router>
     </ThemeProvider>
