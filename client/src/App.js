@@ -7,6 +7,9 @@ import Header from "./component/layout/Header/Header";
 import Footer from "./component/layout/Footer/Footer";
 import Home from "./component/Home/Home";
 import Contact from "./component/layout/Contact/Contact";
+import Products from "./component/Product/Products";
+import ProductDetails from "./component/Product/ProductDetails";
+import Search from "./component/Product/Search";
 function App() {
   useEffect(() => {
     WebFont.load({
@@ -41,15 +44,20 @@ function App() {
   };
   return (
     <ThemeProvider theme={theme}>
-    <Router>
-      <Header />
+      <Router>
+        <Header />
 
-      <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/products" component={Products} />
+        <Route exact path="/product/:id" component={ProductDetails} />
+        <Route path="/products/:keyword" component={Products} />
 
-      <Route exact path="/contact" component={Contact} />
+        <Route exact path="/search" component={Search} />
 
-      <Footer />
-    </Router>
+        <Route exact path="/contact" component={Contact} />
+
+        <Footer />
+      </Router>
     </ThemeProvider>
   );
 }
