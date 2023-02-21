@@ -10,13 +10,24 @@ import Contact from "./component/layout/Contact/Contact";
 import Products from "./component/Product/Products";
 import ProductDetails from "./component/Product/ProductDetails";
 import Search from "./component/Product/Search";
+import LoginSignup from "./component/User/LoginSignup";
+// {==loaduser==}
+import store from "./store";
+import { loadUser } from "./Redux/Actions/userAction";
+import { useSelector } from "react-redux";
+import UserOptions from "./component/layout/Header/UserOptions";
+import Profile from "./component/User/Profile";
+import UpdateProfile from "./component/User/UpdateProfile";
+import ProtectedRoute from "./component/Route/ProtectedRoute";
 function App() {
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
+    store.dispatch(loadUser());
   }, []);
   const theme = {
     colors: {
@@ -45,6 +56,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
+      {isAuthenticated && <UserOptions user={user} />}
         <Header />
 
         <Route exact path="/" component={Home} />
@@ -55,7 +67,9 @@ function App() {
         <Route exact path="/search" component={Search} />
 
         <Route exact path="/contact" component={Contact} />
-
+        <Route exact path="/login" component={LoginSignup} />
+        <ProtectedRoute exact path="/account" component={Profile} />
+        <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
         <Footer />
       </Router>
     </ThemeProvider>

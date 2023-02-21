@@ -11,13 +11,13 @@ import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 
 const categories = [
-  "Laptop",
+  "laptop",
   "Footwear",
   "Bottom",
   "Tops",
   "Attire",
   "Camera",
-  "SmartPhones",
+  "mobile",
 ];
 
 const Products = ({ match }) => {
@@ -26,7 +26,7 @@ const Products = ({ match }) => {
   const alert = useAlert();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 25000]);
+  const [price, setPrice] = useState([0, 50000]);
   const [category, setCategory] = useState("");
 
   const [ratings, setRatings] = useState(0);
@@ -37,7 +37,7 @@ const Products = ({ match }) => {
     error,
     productsCount,
     resultPerPage,
-    filteredProductsCount,
+   
   } = useSelector((state) => state.products);
 
   const keyword = match.params.keyword;
@@ -49,7 +49,7 @@ const Products = ({ match }) => {
   const priceHandler = (event, newPrice) => {
     setPrice(newPrice);
   };
-  let count = filteredProductsCount;
+ 
 
   useEffect(() => {
     if (error) {
@@ -85,7 +85,7 @@ const Products = ({ match }) => {
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
               min={0}
-              max={25000}
+              max={50000}
             />
 
             <Typography>Categories</Typography>
@@ -116,7 +116,8 @@ const Products = ({ match }) => {
               />
             </fieldset>
           </div>
-          {resultPerPage < count && (
+         
+          {resultPerPage < productsCount && (
             <div className="paginationBox">
               <Pagination
                 activePage={currentPage}
@@ -134,6 +135,7 @@ const Products = ({ match }) => {
               />
             </div>
           )}
+         
         </Fragment>
       )}
     </Fragment>
