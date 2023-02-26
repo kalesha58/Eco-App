@@ -1,6 +1,7 @@
 const app = require("./app.js");
 const cloudinary = require("cloudinary");
 const connectDataBase=require("./config/database")
+
 // Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
   console.log(`Error: ${err.message}`);
@@ -10,7 +11,11 @@ process.on("uncaughtException", (err) => {
 
 // {==================CONFIG=================}
 require("dotenv").config({ path: "api/config/config.env"});
+
+
 connectDataBase();
+
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,

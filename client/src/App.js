@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios"
 import { ThemeProvider } from "styled-components";
 import "./App.css";
 import WebFont from "webfontloader";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
 import Header from "./component/layout/Header/Header";
 import Footer from "./component/layout/Footer/Footer";
 import Home from "./component/Home/Home";
@@ -22,8 +23,30 @@ import ProtectedRoute from "./component/Route/ProtectedRoute";
 import Cart from "./component/Cart/Cart";
 import Shipping from "./component/Cart/Shipping";
 import ConfirmOrder from "./component/Cart/ConfirmOrder";
+import Payment from "./component/Cart/Payment";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import OrderSuccess from "./component/Cart/OrderSuccess";
+import MyOrders from "./component/Order/MyOrder";
+import OrderDetails from "./component/Order/OrderDetails";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.user);
+  
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+    // const { data } = await axios.get("http://localhost:5000/api/v1/stripeapikey");
+    return fetch(`http://localhost:5000/api/v1/stripeapikey`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res.json())
+    .then((res) =>  setStripeApiKey(res.stripeApiKey));
+   ;
+  }
   useEffect(() => {
     WebFont.load({
       google: {
@@ -31,6 +54,7 @@ function App() {
       },
     });
     store.dispatch(loadUser());
+    getStripeApiKey()
   }, []);
   const theme = {
     colors: {
@@ -60,6 +84,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         {isAuthenticated && <UserOptions user={user} />}
+        {stripeApiKey && (
+        <Elements stripe={loadStripe(stripeApiKey)}>
+          <ProtectedRoute exact path="/process/payment" component={Payment} />
+        </Elements>
+      )}
         <Header />
 
         <Route exact path="/" component={Home} />
@@ -75,7 +104,13 @@ function App() {
         <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
         <Route exact path="/cart" component={Cart} />
         <ProtectedRoute exact path="/shipping" component={Shipping} />
+        <ProtectedRoute  exact path="/orders" component={MyOrders} />
+        <ProtectedRoute  exact path="/success" component={OrderSuccess} />
+     <Switch>
         <ProtectedRoute  exact path="/order/confirm" component={ConfirmOrder} />
+        <ProtectedRoute exact path="/order/:id" component={OrderDetails} />
+
+     </Switch>
         <Footer />
       </Router>
     </ThemeProvider>
