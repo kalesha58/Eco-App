@@ -3,16 +3,20 @@ import { legacy_createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
+  newProductReducer,
   newReviewReducer,
   productDetailsReducer,
   productReducer,
+  productReviewsReducer,
+  productsReducer,
+  reviewReducer,
 } from "./Redux/Reducers/productReducer";
-import { profileReducer, userReducer } from "./Redux/Reducers/userReducer";
+import { allUsersReducer, profileReducer, userReducer } from "./Redux/Reducers/userReducer";
 import { cartReducer } from "./Redux/Reducers/cartReducer";
-import { myOrdersReducer, newOrderReducer,orderDetailsReducer } from "./Redux/Reducers/orderReducer";
+import { allOrdersReducer, myOrdersReducer, newOrderReducer,orderDetailsReducer, orderReducer } from "./Redux/Reducers/orderReducer";
 
 const reducer = combineReducers({
-  products: productReducer,
+  products: productsReducer,
   productDetails: productDetailsReducer,
   user: userReducer,
   profile: profileReducer,
@@ -21,6 +25,15 @@ const reducer = combineReducers({
   myOrders:myOrdersReducer,
   orderDetails: orderDetailsReducer,
   newReview: newReviewReducer,
+  // {====ADMIN===}
+  allUsers: allUsersReducer,
+  allOrders: allOrdersReducer,
+  product: productReducer,
+  newProduct: newProductReducer,
+  order: orderReducer,
+  productReviews: productReviewsReducer,
+  review: reviewReducer,
+
 });
 let initialState = {
   cart: {
