@@ -21,6 +21,8 @@ app.use(
     optionSuccessStatus: 200,
   })
 );
+
+
 app.use(fileUpload());
 // {================================ROUTES_IMPORT====================}
 const product = require("./routes/productRoute");
@@ -31,6 +33,7 @@ app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
+
 // {==================MIDLEWARE FOR ERROR=============================}
 app.use(errorMiddleware);
 module.exports = app;
