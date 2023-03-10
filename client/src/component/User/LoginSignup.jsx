@@ -24,7 +24,7 @@ const {loading,error,isAuthenticated,token} =useSelector(state=>state.user)
   const registerTab = useRef(null);
   const switcherTab = useRef(null);
   const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState("./avatar.png");
+  const [avatarPreview, setAvatarPreview] = useState("./Profile.png");
 
   //   {=============================LOGIN--FORM===========================}
   const [loginEmail, setLoginEmail] = useState("");
@@ -115,6 +115,7 @@ useEffect(()=>{
          </div>
          <button ref={switcherTab}></button>
        </div>
+           {/* {=============================LOGIN=====================================} */}
        <form className="loginForm" ref={loginTab} onSubmit={loginSubmit}>
          <div className="loginEmail">
            <MailOutlineIcon />

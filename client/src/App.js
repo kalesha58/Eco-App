@@ -36,6 +36,9 @@ import NewProduct from "./component/Admin/NewProduct";
 import UsersList from "./component/Admin/UserList";
 import OrderList from "./component/Admin/OrderList";
 import ProductReviews from "./component/Admin/ProductReviews";
+import UpdateProduct from "./component/Admin/UpdateProduct";
+import UpdateUser from "./component/Admin/UpdateUser";
+import ProcessOrder from "./component/Admin/ProcessOrder";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.user);
 
@@ -155,7 +158,25 @@ function App() {
           isAdmin={true}
           component={ProductReviews}
         />
-
+{/* Now id routes */}
+<ProtectedRoute
+          exact
+          path="/admin/product/:id"
+          isAdmin={true}
+          component={UpdateProduct}
+        />
+         <ProtectedRoute
+          exact
+          path="/admin/user/:id"
+          isAdmin={true}
+          component={UpdateUser}
+        />
+         <ProtectedRoute
+          exact
+          path="/admin/order/:id"
+          isAdmin={true}
+          component={ProcessOrder}
+        />
         <Footer />
       </Router>
     </ThemeProvider>

@@ -20,6 +20,9 @@ import {
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
@@ -150,6 +153,27 @@ export const getUserDetails = (id) => async (dispatch) => {
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: USER_DETAILS_FAIL, payload: error.response.data.message });
+  }
+};
+//{===================================== Update User====================}
+export const updateUser = (id, userData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" },withCredentials: true,};
+
+    const { data } = await axios.put(
+      `http://localhost:5000/api/v1/admin/user/${id}`,
+      userData,
+      config
+    );
+
+    dispatch({ type: UPDATE_USER_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_FAIL,
+      payload: error.response.data.message,
+    });
   }
 };
 
